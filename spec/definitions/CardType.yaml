@@ -1,0 +1,7 @@
+description: Тип банковской карты
+type: string
+enum:
+  - charge_card
+  - credit
+  - debit
+  - credit_or_debit

@@ -1,0 +1,23 @@
+get:
+  description: Получить БИН банка
+  tags:
+    - Search
+  operationId: lookupBankInfo
+  parameters: 
+    - $ref: '#/parameters/requestID'
+    - $ref: '#/parameters/deadline'
+    - name: cardNumber
+      in: query
+      description: Номер банковской карты
+      required: true
+      type: string
+      pattern: '^\d{12,19}$'
+  responses:
+    '200':
+      description: Найденый БИН
+      schema:
+        $ref: '#/definitions/BankInfo'
+    '401':
+      $ref: '#/responses/Unauthorized'
+    '400':
+      $ref: '#/responses/DefaultLogicError'

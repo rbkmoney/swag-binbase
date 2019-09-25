@@ -1,0 +1,27 @@
+type: object
+description: Данные о банке
+required:
+  - paymentSystem
+  - binDataId
+properties:
+  paymentSystem:
+    $ref: '#/definitions/BankCardPaymentSystem'
+  bankName:
+    description: Наименование юридического лица банковской организации
+    type: string
+    maxLength: 100
+  countryCode:
+    x-rebillyMerge:
+      - $ref: '#/definitions/Residence'
+      - description: |
+          Страна резиденции банковской организации,
+          alpha-3 код по стандарту [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)
+    type: string
+    pattern: '^[A-Z]{3}$' # pattern is ^[A-Z]{2}$ in swag
+    example: "RUS" # example is AT in swag
+  cardType:
+    $ref: '#/definitions/CardType'
+  binDataId:
+    type: any # unsure whether we need it
+
+  
