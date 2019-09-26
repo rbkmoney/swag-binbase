@@ -22,6 +22,6 @@ properties:
   cardType:
     $ref: '#/definitions/CardType'
   binDataId:
-    type: any # unsure whether we need it
+    type: object # unsure whether we need it
 
   
