@@ -1,10 +1,9 @@
 get:
-  description: Получить БИН банка
+  description: Получить информацию о карте
   tags:
     - Search
   operationId: lookupBankInfo
   parameters: 
-    - $ref: '#/parameters/requestID'
     - $ref: '#/parameters/deadline'
     - name: cardNumber
       in: query
@@ -14,7 +13,7 @@ get:
       pattern: '^\d{12,19}$'
   responses:
     '200':
-      description: Найденый БИН
+      description: Найденая информация о карте
       schema:
         $ref: '#/definitions/BankInfo'
     '401':

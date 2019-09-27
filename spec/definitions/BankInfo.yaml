@@ -2,7 +2,6 @@ type: object
 description: Данные о банке
 required:
   - paymentSystem
-  - binDataId
 properties:
   paymentSystem:
     $ref: '#/definitions/BankCardPaymentSystem'
@@ -21,7 +20,3 @@ properties:
     example: "RUS" # example is AT in swag
   cardType:
     $ref: '#/definitions/CardType'
-  binDataId:
-    type: object # unsure whether we need it
-
-  
