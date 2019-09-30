@@ -67,11 +67,9 @@ securityDefinitions:
        Authorization: Bearer {JWT}
       ```
 
-      Посмотреть ваш API-ключ вы можете в [личном
-      кабинете](https://dashboard.rbk.money/).
+      Запросы к данному API авторизуются токеном доступа к инвойсу `invoiceAccessToken`.
+      Подробнее о токенах доступа к инвойсу можно прочитать в [соответсвующем разделе документации](https://developer.rbk.money/api/#section/Authorization).
 
-
-      Помните, что вы никому не должны передавать ваш API ключ!
 security:
   - bearer: []
 responses:
