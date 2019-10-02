@@ -1,0 +1,22 @@
+get:
+  description: Получить информацию о карте
+  tags:
+    - Search
+  operationId: lookupCardInfo
+  parameters: 
+    - $ref: '#/parameters/deadline'
+    - name: cardNumber
+      in: query
+      description: Номер банковской карты
+      required: true
+      type: string
+      pattern: '^\d{12,19}$'
+  responses:
+    '200':
+      description: Найденая информация о карте
+      schema:
+        $ref: '#/definitions/CardInfo'
+    '401':
+      $ref: '#/responses/Unauthorized'
+    '400':
+      $ref: '#/responses/DefaultLogicError'
