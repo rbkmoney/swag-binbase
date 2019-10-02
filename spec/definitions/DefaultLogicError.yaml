@@ -10,6 +10,8 @@ properties:
     enum:
       - invalidRequest
       - invalidDeadline
+      - unknownPaymentSystem
+      - unsupportedPaymentSystem
   message:
     description: Человекочитаемое описание ошибки
     type: string
