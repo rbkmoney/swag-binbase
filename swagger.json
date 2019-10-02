@@ -1,0 +1,202 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "RBKmoney Binbase API",
+    "description": "## Описание\nRBKmoney Binbase API является точкой взаимодействия с сервисом поиска информации о банковской карте по её номеру. Все запросы осуществляются с помощью вызовов соответствующих методов API. Любые сторонние приложения, включая наши веб-сайты, личные кабинеты и другие UI-интерфейсы являются внешними приложениями-клиентами.\nRBKmoney Binbase API работает поверх HTTP-протокола. Мы используем REST архитектуру, схема описывается в соответствии со [Swagger](http://swagger.io/). Коды возврата описываются соответствующими HTTP-статусами. Платформа принимает и возвращает JSON-структуры в HTTP body.\n## Тип содержимого и кодировка\nЛюбой запрос к API должен выполняться в кодировке UTF-8 и с указанием содержимого в формате JSON\n```\n  Content-Type: application/json; charset=utf-8\n```\n## Максимальное время обработки запроса\nК любому вызову методов API можно добавить параметр отсечки по времени, определяющий максимальное время ожидания завершения операции по запросу. Данная отсечка передается в соответствующем заголовке HTTP-запроса:\n```\n X-Request-Deadline: 10s\n```\nЗначение отсечки может быть задано в формате ISO 8601 (см. [Формат дат](#section/Format-dat)), либо в относительных величинах, например:\n`150000ms`, `540s`, `3.5m` При этом возможные единицы измерения `ms`, `s`, `m`. В обоих случаях  не рекомендуется, чтобы задаваемое значение было меньше **3 секунд** и превышало **1 минуту**.\n",
+    "termsOfService": "https://rbk.money/",
+    "contact": {
+      "name": "RBKmoney support team",
+      "email": "support@rbk.money",
+      "url": "https://api.rbk.money"
+    }
+  },
+  "host": "api.rbk.money",
+  "basePath": "/binbase/v1",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json; charset=utf-8"
+  ],
+  "produces": [
+    "application/json; charset=utf-8"
+  ],
+  "securityDefinitions": {
+    "bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Для аутентификации вызовов мы используем [JWT](https://jwt.io). Cоответствующий ключ передается в заголовке.\n```shell\n Authorization: Bearer {JWT}\n```\nЗапросы к данному API авторизуются токеном доступа к инвойсу `invoiceAccessToken`. Подробнее о токенах доступа к инвойсу можно прочитать в [соответсвующем разделе документации](https://developer.rbk.money/api/#section/Authorization).\n"
+    }
+  },
+  "security": [
+    {
+      "bearer": []
+    }
+  ],
+  "responses": {
+    "Unauthorized": {
+      "description": "Ошибка авторизации"
+    },
+    "DefaultLogicError": {
+      "description": "Неверные данные",
+      "schema": {
+        "$ref": "#/definitions/DefaultLogicError"
+      }
+    }
+  },
+  "parameters": {
+    "deadline": {
+      "name": "X-Request-Deadline",
+      "in": "header",
+      "description": "Максимальное время обработки запроса",
+      "required": false,
+      "type": "string",
+      "maxLength": 40,
+      "minLength": 1
+    }
+  },
+  "tags": [
+    {
+      "name": "Search",
+      "x-displayName": "Поиск",
+      "description": "Для получения информации о банке необходимо вызвать соответствующий метод платформы. Имеется возможность отфильтровать выборку по определенным статусам.\n"
+    },
+    {
+      "name": "Error Codes",
+      "x-displayName": "Коды ошибок",
+      "description": "\n## Ошибки бизнес-логики\nВсе ошибки бизнес-логики имеют следуюший вид:\n\n  ```json\n  {\n    \"code\": \"string\",\n    \"message\": \"string\"\n  }\n  ```\n\nВ поле `code` содержится тип ошибки, а в `message` - дополнительная информация по произошедшей ошибке.\nНа данный момент существуют следующие коды ошибок:\n\n  | Код                              | Описание                                                                                                                              |\n  | ---                              | --------\n  | **invalidDeadline**              | Неверный формат времени.                                                                                                       |\n  | **invalidRequest**               | Прочие неверные данные запроса.                                                                                                       |\n  | **unsupportedPaymentSystem**     | Система не может работать с указанной платежной системой.\n  | **unknownPaymentSystem**         | Системе неизвестна данная платежная система.\n\n## Общие ошибки\nОшибки возникающие при попытках совершения операций с незарегистрированными в системе объектами. Имеют вид\n\n  ```json\n  {\n      \"message\": \"string\"\n  }\n  ```\n\nВ поле `message` содержится информация по произошедшей ошибке. Например:\n\n  ```json\n  {\n      \"message\": \"Invalid token\"\n  }\n  ```\n\n## Ошибки обработки запросов\nВ процессе обработки запросов силами нашей платформы могут происходить различные непредвиденные ситуации. Об их появлении платформа сигнализирует по протоколу HTTP соответствующими [статусами][5xx], обозначающими ошибки сервера.\n\n  |  Код    |  Описание  |\n  | ------- | ---------- |\n  | **500** | В процессе обработки платформой запроса возникла непредвиденная ситуация. При получении подобного кода ответа мы рекомендуем обратиться в техническую поддержку. |\n  | **503** | Платформа временно недоступна и не готова обслуживать данный запрос. Запрос гарантированно не выполнен, при получении подобного кода ответа попробуйте выполнить его позднее, когда доступность платформы будет восстановлена. |\n  | **504** | Платформа превысила допустимое время обработки запроса, результат запроса не определён. Попробуйте отправить запрос повторно или выяснить результат выполнения исходного запроса, если повторное исполнение запроса нежелательно. |\n\n[5xx]: https://tools.ietf.org/html/rfc7231#section-6.6\n\nЕсли вы получили ошибку, которой нет в данном описании, обратитесь в техническую поддержку.\n"
+    }
+  ],
+  "paths": {
+    "/bin": {
+      "get": {
+        "description": "Получить информацию о карте",
+        "tags": [
+          "Search"
+        ],
+        "operationId": "lookupCardInfo",
+        "parameters": [
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "name": "cardNumber",
+            "in": "query",
+            "description": "Номер банковской карты",
+            "required": true,
+            "type": "string",
+            "pattern": "^\\d{12,19}$"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Найденая информация о карте",
+            "schema": {
+              "$ref": "#/definitions/CardInfo"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/DefaultLogicError"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "BankCardPaymentSystem": {
+      "description": "Платежная система",
+      "type": "string",
+      "enum": [
+        "visa",
+        "mastercard",
+        "visaelectron",
+        "maestro",
+        "forbrugsforeningen",
+        "dankort",
+        "amex",
+        "dinersclub",
+        "discover",
+        "unionpay",
+        "jcb",
+        "nspkmir"
+      ]
+    },
+    "CardInfo": {
+      "type": "object",
+      "description": "Данные о банке",
+      "required": [
+        "paymentSystem"
+      ],
+      "properties": {
+        "paymentSystem": {
+          "$ref": "#/definitions/BankCardPaymentSystem"
+        },
+        "bankName": {
+          "description": "Наименование юридического лица банковской организации",
+          "type": "string",
+          "maxLength": 100
+        },
+        "countryCode": {
+          "x-rebillyMerge": [
+            {
+              "$ref": "#/definitions/Residence"
+            },
+            {
+              "description": "Страна резиденции банковской организации,\nalpha-3 код по стандарту [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)\n"
+            }
+          ],
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "example": "RUS"
+        },
+        "cardType": {
+          "$ref": "#/definitions/CardType"
+        }
+      }
+    },
+    "CardType": {
+      "description": "Тип банковской карты",
+      "type": "string",
+      "enum": [
+        "ChargeСard",
+        "CreditCard",
+        "DebitCard",
+        "CreditOrDebitCard"
+      ]
+    },
+    "DefaultLogicError": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "description": "[Код ошибки](#tag/Error-Codes)\n",
+          "type": "string",
+          "enum": [
+            "invalidRequest",
+            "invalidDeadline",
+            "unknownPaymentSystem",
+            "unsupportedPaymentSystem"
+          ]
+        },
+        "message": {
+          "description": "Человекочитаемое описание ошибки",
+          "type": "string"
+        }
+      }
+    },
+    "Residence": {
+      "description": "Резиденция, alpha-3 код по стандарту [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)",
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "example": "RUS"
+    }
+  }
+}
