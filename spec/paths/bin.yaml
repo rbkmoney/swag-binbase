@@ -2,7 +2,7 @@ get:
   description: Получить информацию о карте
   tags:
     - Search
-  operationId: lookupBankInfo
+  operationId: lookupCardInfo
   parameters: 
     - $ref: '#/parameters/deadline'
     - name: cardNumber
@@ -15,7 +15,7 @@ get:
     '200':
       description: Найденая информация о карте
       schema:
-        $ref: '#/definitions/BankInfo'
+        $ref: '#/definitions/CardInfo'
     '401':
       $ref: '#/responses/Unauthorized'
     '400':
