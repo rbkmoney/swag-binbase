@@ -71,7 +71,7 @@
   ],
   "paths": {
     "/bin": {
-      "get": {
+      "post": {
         "description": "Получить информацию о карте",
         "tags": [
           "Search"
@@ -83,11 +83,12 @@
           },
           {
             "name": "cardNumber",
-            "in": "query",
+            "in": "body",
             "description": "Номер банковской карты",
             "required": true,
-            "type": "string",
-            "pattern": "^\\d{12,19}$"
+            "schema": {
+              "$ref": "#/definitions/CardNumber"
+            }
           }
         ],
         "responses": {
@@ -156,6 +157,19 @@
         },
         "cardType": {
           "$ref": "#/definitions/CardType"
+        }
+      }
+    },
+    "CardNumber": {
+      "type": "object",
+      "required": [
+        "cardNumber"
+      ],
+      "properties": {
+        "cardNumber": {
+          "description": "Номер банковской карты",
+          "type": "string",
+          "pattern": "^\\d{12,19}$"
         }
       }
     },
