@@ -1,4 +1,4 @@
-get:
+post:
   description: Получить информацию о карте
   tags:
     - Search
@@ -6,11 +6,11 @@ get:
   parameters: 
     - $ref: '#/parameters/deadline'
     - name: cardNumber
-      in: query
+      in: body
       description: Номер банковской карты
       required: true
-      type: string
-      pattern: '^\d{12,19}$'
+      schema:
+        $ref: '#/definitions/CardNumber'
   responses:
     '200':
       description: Найденая информация о карте
