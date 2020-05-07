@@ -4,12 +4,15 @@
   "dependencies": {
     "@redocly/openapi-cli": "^0.12.7",
     "json-merge-patch": "^0.2.3",
-    "json-pointer": "^0.6.0"
+    "json-pointer": "^0.6.0",
+    "shelljs": "^0.7.0",
+    "swagger-ui-dist": "^3.18.3"
   },
   "private": true,
   "scripts": {
     "start": "openapi preview-docs",
-    "build": "openapi bundle -o dist",
-    "test": "openapi validate"
+    "build": "node ./build.js",
+    "test": "openapi validate",
+    "openapi": "openapi"
   }
 }
