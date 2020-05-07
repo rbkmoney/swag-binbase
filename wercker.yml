@@ -22,7 +22,7 @@ release-epic:
   steps:
     - script:
       name: prepare release artifacts for epic/* branch
-      code: mkdir -p out && cp ./swagger.{yaml,json} out/
+      code: mkdir -p out && cp ./openapi.{yaml,json} out/
     - lordlothar99/git-push:
       gh_oauth: ${GITHUB_API_TOKEN}
       branch: release/${WERCKER_GIT_BRANCH}
@@ -37,7 +37,7 @@ release-v:
   steps:
     - script:
       name: prepare release artifacts for branch v1, v2, etc.
-      code: mkdir -p out && cp ./swagger.{yaml,json} out/
+      code: mkdir -p out && cp ./openapi.{yaml,json} out/
     - lordlothar99/git-push:
       gh_oauth: ${GITHUB_API_TOKEN}
       branch: release/${WERCKER_GIT_BRANCH}
