@@ -1,0 +1,33 @@
+openapi: 3.0.3
+info:
+  version: 1.0.0
+  title: RBKmoney Binbase API
+  description:
+    $ref: ./docs/api_description.md
+  termsOfService: 'https://rbk.money/'
+  contact:
+    name: RBKmoney support team
+    email: support@rbk.money
+    url: 'https://developer.rbk.money'
+security:
+  - Bearer: []
+tags:
+  - name: Search
+    x-displayName: Поиск
+    description: >
+      Для получения информации о банке необходимо вызвать соответствующий метод
+      платформы. Имеется возможность отфильтровать выборку по определенным
+      статусам.
+  - name: Error Codes
+    x-displayName: Коды ошибок
+    description:
+      $ref: ./docs/error_codes.md
+paths:
+  /bin:
+    $ref: paths/bin.yaml
+servers:
+  - url: 'https://api.rbk.money/binbase/v1'
+components:
+  securitySchemes:
+    Bearer:
+      $ref: components/securitySchemes/Bearer.yaml

@@ -1,0 +1,15 @@
+type: apiKey
+name: Authorization
+in: header
+description: >
+  Для аутентификации вызовов мы используем [JWT](https://jwt.io).
+  Cоответствующий ключ передается в заголовке.
+
+  ```shell
+   Authorization: Bearer {JWT}
+  ```
+
+  Запросы к данному API авторизуются токеном доступа к инвойсу
+  `invoiceAccessToken`. Подробнее о токенах доступа к инвойсу можно прочитать в
+  [соответсвующем разделе
+  документации](https://developer.rbk.money/api/#section/Authorization).

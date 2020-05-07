@@ -1,0 +1,13 @@
+# See https://docs.redoc.ly/cli/configuration/ for more information.
+apiDefinitions:
+  binbase: "openapi/openapi.yaml"
+lint:
+  rules:
+    no-unused-schemas: warning
+  transformers: ./transformers/index.js
+referenceDocs:
+  showConsole: true
+  layout:
+    scope: section
+  routingStrategy: browser
+  htmlTemplate: ./web/index.html
