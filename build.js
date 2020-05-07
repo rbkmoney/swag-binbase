@@ -10,6 +10,8 @@ if (process.argv[2]) {
 require('shelljs/global');
 set('-e');
 
+mkdir('-p', TARGET_DIR)
+
 cp('-R', 'web/*', TARGET_DIR + '/');
 
 exec('npm run openapi bundle -- -o ' + TARGET_DIR + ' --ext json');
