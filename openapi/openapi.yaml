@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  version: 1.0.0
+  version: 1.0.1
   title: RBKmoney Binbase API
   description:
     $ref: ./docs/api_description.md
@@ -16,8 +16,7 @@ tags:
     x-displayName: Поиск
     description: >
       Для получения информации о банке необходимо вызвать соответствующий метод
-      платформы. Имеется возможность отфильтровать выборку по определенным
-      статусам.
+      платформы.
   - name: Error Codes
     x-displayName: Коды ошибок
     description:

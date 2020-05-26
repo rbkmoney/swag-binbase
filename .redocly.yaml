@@ -3,7 +3,18 @@ apiDefinitions:
   binbase: "openapi/openapi.yaml"
 lint:
   rules:
-    no-unused-schemas: warning
+    api-servers: on
+    camel-case-names: on
+    model-description: on
+    no-extra-fields: on
+    operation-operationId: on
+    operation-description: on
+    operation-tags: on
+    parameter-description: on
+    path-declarations-must-exist: on
+    path-keys-no-trailing-slash: on
+    server-not-example: on
+    servers-no-trailing-slash: on
   transformers: ./transformers/index.js
 referenceDocs:
   showConsole: true
