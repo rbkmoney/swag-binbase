@@ -7,5 +7,8 @@ build:
 start:
 	npm start
 
+test:
+	npm test
+
 dev:
 	wercker dev --publish 3000 --direct-mount

@@ -1,0 +1,25 @@
+post:
+  description: Получить информацию о карте
+  tags:
+    - Search
+  operationId: lookupCardInfo
+  parameters:
+    - $ref: ../components/parameters/deadline.yaml
+  requestBody:
+    content:
+      application/json; charset=utf-8:
+        schema:
+          $ref: ../components/schemas/CardNumber.yaml
+    description: Номер банковской карты
+    required: true
+  responses:
+    '200':
+      description: Найденая информация о карте
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: ../components/schemas/CardInfo.yaml
+    '400':
+      $ref: ../components/responses/DefaultLogicError.yaml
+    '401':
+      $ref: ../components/responses/Unauthorized.yaml
